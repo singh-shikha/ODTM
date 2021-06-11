@@ -1,0 +1,65 @@
+
+------------------------------------------------------------
+Sender: LSF System <lsfadmin@iitmc04n03-ib0>
+Subject: Job 379277: <ODTM_Ver3_FMS_scripts> in cluster <iitmlsfcluster> Exited
+
+Job <ODTM_Ver3_FMS_scripts> was submitted from host <iitmlogin5-ib0> by user <shikha> in cluster <iitmlsfcluster> at Mon Nov 19 10:37:17 2018.
+Job was executed on host(s) <16*iitmc04n03-ib0>, in queue <pdtc>, as user <shikha> in cluster <iitmlsfcluster> at Mon Nov 19 10:37:18 2018.
+                            <16*iitmc14n22-ib0>
+                            <16*iitmc16n28-ib0>
+                            <16*iitmc26n47-ib0>
+                            <16*iitmc29n37-ib0>
+                            <16*iitmc19n63-ib0>
+                            <16*iitmc32n64-ib0>
+                            <16*iitmc25n07-ib0>
+</moes/home/shikha> was used as the home directory.
+</iitm4/desk/SHIKHA/ODTM_Ver3_FMS/odtm/scripts> was used as the working directory.
+Started at Mon Nov 19 10:37:18 2018.
+Terminated at Mon Nov 19 10:37:21 2018.
+Results reported at Mon Nov 19 10:37:21 2018.
+
+Your job looked like:
+
+------------------------------------------------------------
+# LSBATCH: User input
+#!/bin/ksh
+
+#BSUB -x
+
+#export I_MPI_FABRICS=shm:dapl
+export OMP_NUM_THREADS=1
+
+ulimit -c unlimited
+
+mpirun -np $NPROCS ./odtm.exe
+
+------------------------------------------------------------
+
+Exited with exit code 255.
+
+Resource usage summary:
+
+    CPU time :                                   0.74 sec.
+    Max Memory :                                 -
+    Average Memory :                             -
+    Total Requested Memory :                     -
+    Delta Memory :                               -
+    Max Swap :                                   -
+    Max Processes :                              -
+    Max Threads :                                -
+    Job Energy Consumption :                     -
+    Cycles Per Instruction :                     -
+    Giga Instructions Per Second :               -
+    Gigabytes per Second :                       -
+    Giga FLoating-point Operations Per Second :  -
+    Run time :                                   3 sec.
+    Turnaround time :                            4 sec.
+
+The output (if any) is above this job summary.
+
+
+
+PS:
+
+Read file <stdlog.err> for stderr output of this job.
+

@@ -1,0 +1,145 @@
+/WORK/run_odtm.sh - used to run the model
+-------------------------------------------------------------------------------
+TIME given in 3 places:
+1. diag_table: this is the time from where it will be counted for 
+               writing in the netcdf files. "Time since 1900-01-01" 
+               etc in the output file. So, this time always has to 
+               be before the model starting time .
+
+2. input.nml: This is the model starting time. It doesnot matter from 
+              where the forcing data is present, depending upon this 
+              time the date will be picked and model will run.
+
+3. run_odtm.sh: This is used for combining the outputs after running 
+              the model. So this has to be consistent with input.nml. 
+              If it is not, outputs from various processors will not
+              be combined.
+------------------------------------------------------------------------
+
+
+# modified the data table: removed tau terms, they are not being used 
+       in the code. And the model is being forced only with winds, it 
+       is calculating wind stress inside the code hence, stress forcing
+       not needed.
+
+------------------------------------------------------------------------
+
+The attributes of input files should be consistent, else will get an 
+error. 
+Lat lon should have units- degrees_east and degrees_north, 
+calendar should be 365_day and not NOLEAP.
+
+example of a NCO command to change attribute in an existing netcdf file:
+ ncatted -a units,XFNR,m,c,degrees_east ssw_model_grid_newcal.nc 
+
+example of a CDO command to change calendar type:
+cdo setcalendar,365_day ifile ofile
+
+------------------------------------------------------------------------
+Why do we need data_table, diag_table and input,nml etc inside INPUT 
+directory also, its confusing I guess!
+------------------------------------------------------------------------
+
+Tried running with longer data, the model blows up, we check the file 
+crash.odtm.nc being produced in the RESTART directory. This shows that
+ at second timestep, at someplaces the values are extremely high. This
+ is a genuine model blow up. Now checking with the same input data but
+ from 1995 onwards. This will suggest if it is a data issue or a model
+ issue.
+ It was a data issue, the units were not correct.
+The new precipitation data is order 2 smaller than the old data, it has
+ to be of the order of 10^7, units should be m/sec;
+ 1kg/m^2.s = 86400 mm/day=10^-3 m/s
+ the temperature shoudl be in degrees and not Kelvin
+
+------------------------------------------------------------------------
+To change no of layers change declaration statement in the beginning in
+ /src/odtm/size.mod.f90, also change the initial and boundary values 
+down in the code(tr01,tr01,dz,hd,he,etc). 
+-------------------------------------------------------------------------------
+The executable was not being copied in run_odtm.sh : that line has been
+ added in the script now.
+-------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
+couple.F in /src was calculating the diffusivity term wrong. It was doing 
+rtemp1-rtemmp1 instead of rtemp1-rtemp2 in one of the terms. I have 
+corrected it and running again.
+
+-------------------------------------------------------------------------------
+CDO was unable to merge the files because it could not support netcdf types, the 
+version of cdo was changed to cdo/1.6.1, and now it can merge files. This has 
+been made default in the directory.
+
+-------------------------------------------------------------------------------
+Explanation for directories:
+
+make_odtm.sh
+If you change anything in the code itself, such as any physics, no of 
+layers, variable name etc, 'make' first before proceeding to WORK 
+directory.
+ 
+
+
+scripts
+
+This directory has all the codes to run the model. It has a routine to 
+run the model, submit the job, kill the job, combine outputs from 
+different processors etc. All of them are to be copied to WORK directory
+ before starting.
+
+src
+
+This directory has all the source codes of ODTM, MY and FMS routine in
+ this.
+src/odtm/stability_check.f90: This routine checks for unstable density 
+profile and distributes temperature homogeneously to the layers if 
+unstable. icheck is a flag used to know if the layer has become stable
+ or not. It is understood that by 100 times the loop has iterated it
+ would become stable. If the layer is already stable icheck=0. It first
+ checks for temperature, and then checks for salinity.
+ 
+
+exec
+bin
+WORK
+
+-------------------------------------------------------------------------------
+
+WORK:  This directory is used to create experiments and run the model 
+instead of disturbing the entire setup.
+It has following few important components:
+
+   INPUT directory : This has all the forcing data to be provided to 
+		the model
+   OUTPUT directory : This is the directory in which all the output 
+		files from the run will be saved.
+   input.nml : This is the file in which conditions for the model to 
+		run are written, it has the starting time, total time 
+		of model run, date, time step etc all mentioned.
+   data_table : This functionality is related to the INPUT directory 
+		and mentions the data to be used by the model. The 
+		general syntax is as follows:
+
+   diag_table : This functionality is for providing the data for output
+		 files.
+
+   run_odtm.sh : this is the main script to be used for running 
+		the model. 
+
+   odtm_submit.sh : this is not used directly by us , but is called by
+		 run_odtm, to run the model
+
+   kill_odtm.sh : This routine is to be called if you want to kill the
+		 model run in between. This checks if a job is running
+		 and asks again if we are sure to want to kill a job.
+
+  domppncombine.sh : This functionality is a post processing routine. 
+		It combines the output receieved from various processors
+		and combines them into one and transfers to the 
+		OUTPUT dircetory.
+
+  
+
+
+
+Modified the job submission script to suit Pratyush environment

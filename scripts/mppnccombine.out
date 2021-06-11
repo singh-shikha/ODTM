@@ -1,0 +1,46 @@
++ caltype=noleap
++ datefunc=./datefunc
++ diag_table=diag_table
++ mppnccombinecmd='./mppnccombine -n4 -c -r'
++ outdir=OUTPUT
++ [[ ! -e ./datefunc ]]
++ echo Error: ./datefunc do not exist.
+Error: ./datefunc do not exist.
++ exit 1
+
+------------------------------------------------------------
+Sender: LSF System <lsfadmin@iitmc09n19-ib0>
+Subject: Job 379278: <ODTM_Ver3_FMS_scripts.post> in cluster <iitmlsfcluster> Exited
+
+Job <ODTM_Ver3_FMS_scripts.post> was submitted from host <iitmlogin5-ib0> by user <shikha> in cluster <iitmlsfcluster> at Mon Nov 19 10:37:17 2018.
+Job was executed on host(s) <iitmc09n19-ib0>, in queue <pdtc>, as user <shikha> in cluster <iitmlsfcluster> at Mon Nov 19 10:37:20 2018.
+</moes/home/shikha> was used as the home directory.
+</iitm4/desk/SHIKHA/ODTM_Ver3_FMS/odtm/scripts> was used as the working directory.
+Started at Mon Nov 19 10:37:20 2018.
+Terminated at Mon Nov 19 10:37:21 2018.
+Results reported at Mon Nov 19 10:37:21 2018.
+
+Your job looked like:
+
+------------------------------------------------------------
+# LSBATCH: User input
+./domppnccombine.sh -s 19950101000000 -p 379277
+------------------------------------------------------------
+
+Exited with exit code 1.
+
+Resource usage summary:
+
+    CPU time :                                   0.07 sec.
+    Max Memory :                                 16 MB
+    Average Memory :                             -
+    Total Requested Memory :                     -
+    Delta Memory :                               -
+    Max Swap :                                   -
+    Max Processes :                              -
+    Max Threads :                                -
+    Run time :                                   1 sec.
+    Turnaround time :                            4 sec.
+
+The output (if any) is above this job summary.
+

@@ -1,0 +1,114 @@
+./check.F:19:c checking viscocity limits ===== A = (dx)^3.beta
+./check.F:24:	 write (*,*) 'Viscocity is less than the required minimum value'
+./check.F:28:	write (*,*) 'WARNING!!! check.F found Viscocity coefficient'
+./check.F:34:	 write (*,*) 'Viscocity is sufficient compared to minimum value'
+./check.F:69:	write (*,20)' laplacian viscosity = ', diffuse
+./couple.F:17:        use size_mod, only : isc, iec, jsc, jec
+./couple.F:74:        do i=isc,iec
+./couple.F:211:        temp(isc:iec,jsc:jec,1:kmaxMYM,1) = temp(isc:iec,jsc:jec,1:kmaxMYM,2)
+./couple.F:212:        salt(isc:iec,jsc:jec,1:kmaxMYM,1) = salt(isc:iec,jsc:jec,1:kmaxMYM,2)
+./couple.F:213:        uvel(isc:iec,jsc:jec,1:kmaxMYM,1) = uvel(isc:iec,jsc:jec,1:kmaxMYM,2)
+./couple.F:214:        vvel(isc:iec,jsc:jec,1:kmaxMYM,1) = vvel(isc:iec,jsc:jec,1:kmaxMYM,2)
+./mixed_layer_physics.F:15:            use size_mod, only : rmld_misc, mld_mld, imt, jmt
+./mixed_layer_physics.F:16:            use size_mod, only : isc, iec, jsc, jec
+./mixed_layer_physics.F:45:         do i=isc, iec
+./mixed_layer_physics.F:115:         rmld_misc(i,j,1)  = qnet_in
+./mixed_layer_physics.F:116:         rmld_misc(i,j,2)  = ssw(i,j)
+./mixed_layer_physics.F:117:         rmld_misc(i,j,3)  = pme_in
+./mixed_layer_physics.F:118:         rmld_misc(i,j,4)  = uwndin
+./mixed_layer_physics.F:119:         rmld_misc(i,j,5)  = vwndin
+./mixed_layer_physics.F:120:         rmld_misc(i,j,6)  = tauxin
+./mixed_layer_physics.F:121:         rmld_misc(i,j,7)  = tauyin
+./mixed_layer_physics.F:122:         rmld_misc(i,j,8)  = sphm_in
+./mixed_layer_physics.F:123:         rmld_misc(i,j,9)  = airt_in
+./mixed_layer_physics.F:124:         rmld_misc(i,j,10)  = cldin
+./mixed_layer_physics.F:125:         rmld_misc(i,j,11)  = chl(i,j)
+./mixed_layer_physics.F:126:         rmld_misc(i,j,12)  = ql
+./mixed_layer_physics.F:127:         rmld_misc(i,j,13)  = qs
+./mixed_layer_physics.F:128:         rmld_misc(i,j,14)  = qb
+./mixed_layer_physics.F:129:         rmld_misc(i,j,15)  = rvr(i,j)
+./mixed_layer_physics.F:139:!         rmld_misc(i,kk,j) = entr_flux(kk)
+./main.F90:12:    use size_mod, only : isc, iec, jsc, jec
+./main.F90:24:    use size_mod, only : taux_force, tauy_force, init_size, denss, rmld_misc
+./main.F90:219:!        do i=isc,iec
+./main.F90:236:        do i=isc,iec
+./main.F90:274:!        if (isc<=imt/2.and.iec>=imt/2.and.jsc<=jmt/2.and.jec>=jmt/2) then
+./main.F90:295:        sumall = sum(u(isc:iec,jsc:jec,:,taun) + &
+./main.F90:296:                         t(isc:iec,jsc:jec,:,1,taun))
+./main.F90:300:        umax = maxval(abs(u(isc:iec,jsc:jec,:,taun)))
+./main.F90:359:        allocate ( lmask(isc:iec,jsc:jec) ) 
+./main.F90:360:        allocate ( lmask3(isc:iec,jsc:jec,km) )
+./main.F90:361:        allocate ( lmask3m(isc:iec,jsc:jec,kmaxMYM) )
+./main.F90:365:        lmask(isc:iec,jsc:jec)=omask(isc:iec,jsc:jec)
+./main.F90:368:            lmask3(isc:iec, jsc:jec, ii) = omask(isc:iec,jsc:jec)
+./main.F90:372:            lmask3m(isc:iec,jsc:jec, ii) = omask(isc:iec,jsc:jec) 
+./main.F90:522:        used = send_data(id_mask, rkmh(isc:iec,jsc:jec), time)
+./main.F90:523:        used = send_data(id_dxu, dxu(isc:iec,jsc:jec), time)
+./main.F90:524:        used = send_data(id_dyv, dyv(isc:iec,jsc:jec), time)
+./main.F90:535:        used = send_data(id_rkmh,rkmh(isc:iec,jsc:jec), time)
+./main.F90:537:        used = send_data(id_rkmu,rkmu(isc:iec,jsc:jec), time)
+./main.F90:539:        used = send_data(id_rkmv,rkmv(isc:iec,jsc:jec), time)
+./main.F90:541:        used = send_data(id_sst,t(isc:iec,jsc:jec,1,1,taun), time, mask=lmask)
+./main.F90:543:        used = send_data(id_sss,t(isc:iec,jsc:jec,1,2,taun), time, mask=lmask)
+./main.F90:545:        used = send_data(id_temp,t(isc:iec,jsc:jec,:,1,taun),time, mask=lmask3)
+./main.F90:547:        used = send_data(id_salt,t(isc:iec,jsc:jec,:,2,taun),time, mask=lmask3)
+./main.F90:549:        used = send_data(id_h,h(isc:iec,jsc:jec,:,taun),time, mask=lmask3)
+./main.F90:551:        used = send_data(id_eta, eta(isc:iec,jsc:jec,1,1), time, mask=lmask)
+./main.F90:553:        used = send_data(id_u, u(isc:iec,jsc:jec,:,taun), time, mask=lmask3)
+./main.F90:555:        used = send_data(id_v, v(isc:iec,jsc:jec,:,taun), time, mask=lmask3)
+./main.F90:557:        used = send_data(id_we, we(isc:iec,jsc:jec,:), time, mask=lmask3)
+./main.F90:563:        used = send_data(id_temp_mld,temp(isc:iec,jsc:jec,:,1),time, mask=lmask3m)
+./main.F90:565:        used = send_data(id_salt_mld,salt(isc:iec,jsc:jec,:,1),time, mask=lmask3m)
+./main.F90:567:        used = send_data(id_u_mld,uvel(isc:iec,jsc:jec,:,taun),time, mask=lmask3m)
+./main.F90:569:        used = send_data(id_v_mld,vvel(isc:iec,jsc:jec,:,taun),time, mask=lmask3m)
+./main.F90:571:        used = send_data(id_diag,rmld_misc,time, mask=lmask3m)
+./main.F90:636:        call mpp_get_compute_domain(domain, isc, iec, jsc, jec)
+./main.F90:641:        print *, 'Compute Domain: PE, isc, iec, jsc, jec = ', mpp_pe(), isc, iec, jsc, jec
+./main.F90:772:            do i=isc,iec
+./main.F90:816:        revap = mpp_global_sum(domain,rmld_misc(:,:,3),BITWISE_EXACT_SUM)
+./main.F90:818:        ievap = count(rmld_misc(isc:iec,jsc:jec,3)>0.)
+./main.F90:821:        iprecip = count(rmld_misc(isc:iec,jsc:jec,3)<0.)
+./main.F90:824:        do i=isc, iec
+./main.F90:827:                    if (rmld_misc(i,j,3) .gt. 0.0) pme_corr(i,j) =  1.0*revap/ievap
+./main.F90:830:                    if (rmld_misc(i,j,3) .lt. 0.0) pme_corr(i,j) =  1.0*revap/iprecip
+./entrain.three.F:12:            use size_mod, only : isc, iec, jsc, jec, km, dz_min
+./entrain.three.F:24:	do i=isc, iec
+./entrain.three.F:45:        do i=isc, iec
+./clinic.F90:13:    use size_mod, only : isc, iec, jsc, jec, km
+./clinic.F90:34:    do i=isc,iec
+./clinic.F90:116:                if (im<isc) im=isc
+./clinic.F90:118:                if (jm<isc) jm=jsc
+./filter.F90:4:    use size_mod, only : isc, iec, jsc, jec, dau, dav, dah
+./filter.F90:38:                lmask(isc:iec,jsc:jec,kk) = abs(u(isc:iec,jsc:jec,kk,taup)) > vel_lim(kk) &
+./filter.F90:39:                                        .or.abs(v(isc:iec,jsc:jec,kk,taup)) > vel_lim(kk)
+./filter.F90:69:        do i=isc, iec
+./filter.F90:128:        do i=isc, iec
+./filter.F90:135:        do i=isc, iec
+./polar_coord.F:13:        use size_mod, only : isc, iec, jsc, jec, dau, dav
+./polar_coord.F:33:	do i=isc, iec
+./size_mod.F90:13:  integer :: isc, iec, jsc, jec
+./size_mod.F90:53:  real, pointer, dimension(:,:,:) :: rmld_misc => null(), denss => null()
+./size_mod.F90:127:        allocate ( fcor(isc:iec,jsc:jec) )
+./size_mod.F90:128:        allocate ( fcoru(isc:iec,jsc:jec) )
+./size_mod.F90:129:        allocate ( fcorv(isc:iec,jsc:jec) )
+./size_mod.F90:130:        allocate ( diag_ext1(isc:iec,jsc:jec,kmaxMYM), diag_ext2(isc:iec,jsc:jec,kmaxMYM) )
+./size_mod.F90:131:        allocate ( diag_ext3(isc:iec,jsc:jec,kmaxMYM), diag_ext4(isc:iec,jsc:jec,kmaxMYM) )
+./size_mod.F90:132:        allocate ( diag_ext5(isc:iec,jsc:jec,kmaxMYM), diag_ext6(isc:iec,jsc:jec,kmaxMYM) )
+./size_mod.F90:134:        allocate ( temp_read(isc:iec,jsc:jec,kclim,lm) )
+./size_mod.F90:135:        allocate ( salt_read(isc:iec,jsc:jec,kclim,lm) )
+./size_mod.F90:137:        allocate ( we(isd:ied,jsd:jed,km), wd(isd:ied,jsd:jed,km), we_mld(isc:iec,jsc:jec,0:km) )
+./size_mod.F90:138:        allocate ( eta(isc:iec,jsc:jec,km,4), pvort(isc:iec,jsc:jec,km), rEnergy(isc:iec,jsc:jec,km) )
+./size_mod.F90:139:        allocate ( SMCoeff(isc:iec,jsc:jec,kmaxMYM), SHCoeff(isc:iec,jsc:jec,kmaxMYM) )
+./size_mod.F90:140:        allocate ( rmld_misc(isc:iec,jsc:jec,kmaxMYM), denss(isc:iec,jsc:jec,km) )
+./size_mod.F90:142:        allocate ( mld_mld(isc:iec,jsc:jec) )
+./size_mod.F90:143:        allocate ( wd_mask(isc:iec, jsc:jec) )
+./size_mod.F90:144:        allocate ( we_upwel(isc:iec, jsc:jec, 2) )
+./size_mod.F90:145:        allocate ( taux(isc:iec,jsc:jec,2), tauy(isc:iec,jsc:jec,2) )
+./size_mod.F90:146:        allocate ( taux_force(isc:iec,jsc:jec), tauy_force(isc:iec,jsc:jec) )
+./size_mod.F90:147:        allocate ( ssw(isc:iec,jsc:jec) )
+./size_mod.F90:148:        allocate ( cld(isc:iec,jsc:jec) )
+./size_mod.F90:149:        allocate ( pme(isc:iec,jsc:jec), pme_corr(isc:iec,jsc:jec) )
+./size_mod.F90:150:        allocate ( chl(isc:iec,jsc:jec) )
+./size_mod.F90:151:        allocate ( rvr(isc:iec,jsc:jec) )
+./size_mod.F90:152:        allocate ( sphm(isc:iec,jsc:jec), airt(isc:iec,jsc:jec) )
+./size_mod.F90:153:        allocate ( uwnd(isc:iec,jsc:jec), vwnd(isc:iec,jsc:jec) )
